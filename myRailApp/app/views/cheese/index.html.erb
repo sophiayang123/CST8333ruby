@@ -1,0 +1,28 @@
+
+
+<h1>Shuting Yang assigment1</h1>
+
+<% if @cheeseList.length() >0 %>
+    <table>
+        <thead> data table
+            <tbody>
+                <tr>
+                    <td>id</td>
+                    <td>date</td>
+                    <td>cases</td>
+                    <td>deaths</td>
+                    <td>cases_14_100k</td>
+                    <td>cases_100k</td>
+                    <td>name_fr</td>
+                    <td>name_en</td>
+                <tr>
+                <% @cheeseList.each do |item| %>
+                    <tr>
+                        <% item.cases %>
+                        <% @cheeseList %>
+                    </tr>
+                <% end %>
+            </tbody>
+        </th>
+    </table>
+<% end %>
