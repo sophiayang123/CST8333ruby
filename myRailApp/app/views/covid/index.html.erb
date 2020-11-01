@@ -3,7 +3,7 @@
     <%= link_to "<button>load data</button>".html_safe, covid_import_path(), method: :post %>
     <%= link_to 'create new record', covid_new_path() %>
     <%= link_to 'write to csv', covid_writedata_path(format: "csv") %>
-<table>
+<table id="datatable">
     <thead>
         <tr>
             <th>db_id</th>
@@ -13,6 +13,9 @@
             <th>deaths</th>
             <th>name_fr</th>
             <th>name_en</th>
+            <th> show action</th>
+            <th> update action</th>
+            <th> delete action</th>
         </tr>
     </thead>
     <tbody>

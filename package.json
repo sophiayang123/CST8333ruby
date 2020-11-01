@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "imports-loader": "^1.2.0"
+  }
+}
