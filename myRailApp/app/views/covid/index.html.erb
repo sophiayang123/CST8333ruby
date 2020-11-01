@@ -1,0 +1,44 @@
+<h1>Program by Shuting Yang</h1>
+<%= flash[:notice] =%>
+    <%= link_to "<button>load data</button>".html_safe, covid_import_path(), method: :post %>
+    <%= link_to 'create new record', covid_new_path() %>
+    <%= link_to 'write to csv', covid_writedata_path(format: "csv") %>
+<table>
+    <thead>
+        <tr>
+            <th>db_id</th>
+            <th>record_id</th>
+            <th>date</th>
+            <th>cases</th>
+            <th>deaths</th>
+            <th>name_fr</th>
+            <th>name_en</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @covids.each do |covid| %>
+        <tr>
+            <td><%= covid.id =%></td>
+            <td><%= covid.cid =%></td>
+            <td><%= covid.date=%></td>
+            <td><%= covid.cases=%></td>
+            <td><%= covid.deaths=%></td>
+            <td><%= covid.name_fr=%></td>
+            <td><%= covid.name_en=%></td>
+            <td><%= link_to 'Show detail', covid_show_path(:id => covid.id) %></td>
+            <td><%= link_to 'Edit', covid_edit_path(:id => covid.id), method: :get%></td>
+            <td><%= link_to 'Delete', covid_delete_path(:id => covid.id),method: :delete, data: {confirm: "Are you sure"} %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+

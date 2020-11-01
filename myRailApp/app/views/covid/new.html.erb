@@ -1,0 +1,25 @@
+<h1>Program by Shuting Yang</h1>
+<h1>Insert covid record form</h1>
+<%= form_for @covidRecord, url: covid_create_path(@covidRecord), method: :post do |f| %>
+  <% if @covidRecord %>
+    <span>label</span><br>
+    <%= f.text_field :cid =%><br>
+
+    <span>date</span><br>
+    <%= f.text_field :date =%><br>
+
+    <span>cases</span><br>
+    <%= f.text_field :cases =%><br>
+
+    <span>deaths</span><br>
+    <%= f.text_field :deaths =%><br>
+
+    <span>name_fr</span><br>
+    <%= f.text_field :name_fr =%><br>
+
+    <span>name_en</span><br>
+    <%= f.text_field :name_en =%><br>
+
+    <%= f.submit "Submit" %>
+  <% end %>
+<% end %>

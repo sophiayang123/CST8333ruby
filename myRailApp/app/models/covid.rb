@@ -1,0 +1,78 @@
+#  Author: Shuting Yang
+#  Date September 24, 2019
+#  Description: Covid object for covid records.
+ 
+require "time"
+# Represents a covid-19 statictis record from a csv file 
+# @author Shuting Yang
+class Covid < ApplicationRecord
+    require 'csv'
+    
+    # transform all data to csv
+    def self.to_csv
+        attributes = %w{cid date cases deaths name_en name_fr}
+    
+        CSV.generate(headers: true) do |csv|
+            csv << attributes
+        
+            all.each do |user|
+                csv << attributes.map{ |attr| user.send(attr) }
+            end
+        end
+    end
+    
+
+    # If string is not null return it,
+    # Strings with only "null" or blank result in null reference being returned.
+    # @param [String] String to be processed
+    # @return [String] processed String or null
+    def self.processAsString(value)
+        if value.nil? || value.blank?
+          nil
+        else 
+          value
+        end
+    end
+
+    #  Utility method that cleans the String passed and attempts to convert
+    #  it into an Integer. If the passed String is null, empty, or contains "null",
+    #  then a null is returned.
+    #  @param [String] String to be processed
+    #  @return [Integer] Integer or null
+    def self.processAsInteger(value) 
+        result = processAsString(value);
+        result==nil ? nil: Integer(result);
+    end
+    
+    #  Utility method that cleans the String passed and attempts to convert
+    #  it into a Date. If the passed String is null, empty, or contains "null",
+    #  then a null is returned.
+    #  @param [String] String to be processed
+    #  @return [Date] or null 
+    def self.processAsLocalDate(value)
+        result = processAsString(value);
+        result==nil ? nil: Date.parse(result);
+    end
+
+    # basic string reprentation of the covid data record */
+    def to_s
+        '%s %s %s %s %s %s' % [@cid, @date, @cases, @deaths, @name_en, @name_fr]
+    end
+end
+
+    # attr_accessible :id, :date, :cases, :deaths, :cases_100k, :cases_14_100k, :name_fr, :name_en
+
+    # Default Constructor */
+    # String-based constructor, to facilitate reading string values from csv file.
+    # The strings are cleaned, and converted to the appropriate type where needed, 
+    # additionally empty strings are converted to null references.
+    # def initialize(params)    
+    #     super()
+    #     params ||={}
+    #     @id = processAsString(params[:id])
+    #     @date = processAsLocalDate(params[:date])
+    #     @cases = processAsInteger(params[:cases])
+    #     @deaths = processAsInteger(params[:deaths])
+    #     @name_fr = processAsString(params[:name_fr])
+    #     @name_en = processAsString(params[:name_en])
+    # end
