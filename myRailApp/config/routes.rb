@@ -1,3 +1,4 @@
+#routers to do crud action with database
 Rails.application.routes.draw do
   resources :covids, only: :writedata
   get 'covid/index', to: 'covid#index'

@@ -1,29 +1,47 @@
 require 'test_helper'
-
+#
 class CovidControllerTest < ActionDispatch::IntegrationTest
+  # called before every single test
+  setup do
+    @record = Covid.create(              
+      cid: Covid.processAsString('test'),
+      date: Covid.processAsLocalDate('2020-12-01'),
+      cases: Covid.processAsInteger('0'),
+      deaths: Covid.processAsInteger('0'),
+      name_fr: Covid.processAsString('test'),
+      name_en: Covid.processAsString('test') )
+  end
+
+   # called after every single test
+  teardown do
+    @record = nil
+  end
+
   test "should get index" do
     get covid_index_url
     assert_response :success
   end
 
-
   # check if controller new method can save new record
   test "should initial new record" do
     "test by Shuting Yang"
-    post = Covid.new
-    assert post.save, "Saved the new record"
+    rec = Covid.new
+    assert rec.save, "insert successfully"
   end
-
-  # creating an instance variable to test with
-  def setup
-    @record = Covid.create(adjuster_name: "TestLastName", address_1: "4511 W 200 S", id: 1)
+  
+   # check if destroy record work
+  test "should destroy article" do
+    assert_difference('Covid.count', -1) do
+      delete covid_delete_path(@record)
+    end
+    assert_redirected_to '/'
   end
-
-  # Testing going to an already created adjuster and deleting them
-  test "get edit adjuster form and delete adjuster" do
-    delete edit_adjuster_path(@record)
-    follow_redirect!
-    assert_nil(@record)
+  # check if update record work
+  test "should update article" do
+    # get covid_edit_path(@record), params: {  cid: "updated" }
+    assert_redirected_to covid_update_path(@record)
+    # Reload association to fetch updated data and assert that title is updated.
+    @record.reload
+    assert_equal "updated", @record.cid
   end
-
 end
